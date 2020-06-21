@@ -1,0 +1,16 @@
+{
+  "name": "automate-google-map-insertion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^4.10.1",
+    "dotenv": "8.2.0",
+    "puppeteer": "^4.0.0"
+  }
+}
