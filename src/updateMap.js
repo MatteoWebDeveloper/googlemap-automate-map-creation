@@ -22,10 +22,10 @@ const deleteAllLayers = async () => {
     }
 };
 
-const addUserToMap = async (member) => {
-    console.log('[LOG] addUserToMap: ', member);
+const addLocationToMap = async (row) => {
+    console.log('[LOG] addLocationToMap: ', row);
 
-    await browser.page.type(selectors.searchBar, member.Postcode);
+    await browser.page.type(selectors.searchBar, row.address);
     await browser.page.keyboard.press('Enter');
 
     await browser.page.waitForSelector(selectors.addToLocationMap);
@@ -37,20 +37,25 @@ const addUserToMap = async (member) => {
     });
 
     await browser.page.waitForSelector(selectors.editLocationName);
-    await browser.page.click(selectors.editLocationName);
+    // await browser.page.click(selectors.editLocationName);
+    await browser.page.evaluate(() => {
+        const element = document.querySelector('#map-infowindow-edit-button');
+        element.click()
+        return Promise.resolve();
+    });
 
-    await browser.page.type(selectors.nameInput, `${member.Forename} ${member.Surname}`);
-    await browser.page.type(selectors.descriptionInput, `${member.Trade}`);
+    await browser.page.type(selectors.nameInput, row.locationName);
+    await browser.page.type(selectors.descriptionInput, row.locationDescription);
     await browser.page.click(selectors.dialogLocationSaveButton);
 };
 
 const updateMap = async (data) => {
     await deleteAllLayers();
 
-    for (const member of data) {
-        await updateLayer(member.Type);
+    for (const row of data) {
+        await updateLayer(row.layerName);
 
-        await addUserToMap(member);
+        await addLocationToMap(row);
     }
 
     deleteLayer(0);

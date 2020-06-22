@@ -11,6 +11,7 @@
   "dependencies": {
     "csv-parse": "^4.10.1",
     "dotenv": "8.2.0",
-    "puppeteer": "^4.0.0"
+    "puppeteer": "^4.0.0",
+    "string-template": "^1.0.0"
   }
 }
