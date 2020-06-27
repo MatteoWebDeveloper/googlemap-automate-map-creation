@@ -66,3 +66,9 @@ install depedencies and start program
 npm i
 npm start
 ```
+
+### TODO
+- make the application an executable for Mac and Window
+- automatically find Chrome exe
+- when you start the app, define google map location
+- when you start the app, define csv data
