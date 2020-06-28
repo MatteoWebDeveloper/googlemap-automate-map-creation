@@ -18,29 +18,20 @@ Google has also some security against automation tool.
 
 I then used puppeteer *connect* and started my browser with `remote-debugging-port` flag to allow puppeteer to communicate with my browser with websocket.
 
-## Setup
-
-### Setup `.env` file
-create on the root project a file `.env` and the following line:
-```
-CHROME_EXE_PATH = "{executable path}"
-```
-replace the `"{executable path}"` with the relevant browser executable path.
-You can easily find if you open the on chrome `chrome://version/` they show it under `Executable Path`
+## Setup interface
+When you start the application it will render a UI in the browser
 
 ### Change google map page
-Inside `config.json` you can change the `PAGE` URL property value to the map you want to save.
-```
-{
-    "PAGE": "https://www.google.com/maps/d/edit?hl=en&mid=19u4WApZGuJwJGfk4_iiWQNGC8TlEXbYG&ll=54.83361322148431%2C-3.4359725000000108&z=5",
-    ...
-}
-```
+Please provide a URL where you want to create the map, here a sample
+`https://www.google.com/maps/d/edit?hl=en&mid=19u4WApZGuJwJGfk4_iiWQNGC8TlEXbYG&ll=54.83361322148431%2C-3.4359725000000108&z=5`
 
 ### Change data and mappings
 The program is decouple from its data source, 
-you can place you data in `./data/data.csv` and you can define your mappings in `./data/map.csv`.
-`map.csv` uses [string-template](https://www.npmjs.com/package/string-template) to do the interpolation, follow the library template to take full advatange of the mapping functionality.
+on the setup interfacte you can provide a **data source csv** and **data map csv**.
+
+if you need sample data you can find them inside `./sample_data/data.csv` and you can define your mappings in `./sample_data/map.csv`.
+
+`data map csv` uses [string-template](https://www.npmjs.com/package/string-template) to do the interpolation, follow the library template to take full advatange of the mapping functionality.
 
 **data.csv**
 ```csv
@@ -66,9 +57,3 @@ install depedencies and start program
 npm i
 npm start
 ```
-
-### TODO
-- make the application an executable for Mac and Window
-- automatically find Chrome exe
-- when you start the app, define google map location
-- when you start the app, define csv data

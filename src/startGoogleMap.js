@@ -1,10 +1,12 @@
-const CONFIG = require('./config.json');
 const browser = require('./pupeteerInstance');
+const { getSetup } = require('./setupInstance');
 const { getMembersData } = require('./members');
 const { updateMap } = require('./updateMap');
 
 const startGoogleMap = async () => {
-    await browser.page.goto(CONFIG.PAGE, { waitUntil: 'networkidle2'});
+    const { PAGE } = getSetup();
+    
+    await browser.page.goto(PAGE, { waitUntil: 'networkidle2'});
 
     const data = getMembersData();
 

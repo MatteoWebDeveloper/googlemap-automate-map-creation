@@ -29,30 +29,33 @@ const addLocationToMap = async (row) => {
     await browser.page.keyboard.press('Enter');
 
     await browser.page.waitForSelector(selectors.addToLocationMap);
+    
     // await browser.page.click(selectors.addToLocationMap); // No idea why chrome does not like it
-    await browser.page.evaluate(() => {
+    await browser.page.evaluate(eval(`() => {
         const element = document.querySelector('#addtomap-button');
         element.click()
         return Promise.resolve();
-    });
-
+    }`));
+    
     await browser.page.waitForSelector(selectors.editLocationName);
     // await browser.page.click(selectors.editLocationName);
-    await browser.page.evaluate(() => {
+    await browser.page.evaluate(eval(`() => {
         const element = document.querySelector('#map-infowindow-edit-button');
         element.click()
         return Promise.resolve();
-    });
+    }`));
 
     await browser.page.type(selectors.nameInput, row.locationName);
     await browser.page.type(selectors.descriptionInput, row.locationDescription);
-    await browser.page.click(selectors.dialogLocationSaveButton);
+    return await browser.page.click(selectors.dialogLocationSaveButton);
 };
 
 const updateMap = async (data) => {
     await deleteAllLayers();
 
     for (const row of data) {
+        if (row.address === "") continue;
+
         await updateLayer(row.layerName);
 
         await addLocationToMap(row);

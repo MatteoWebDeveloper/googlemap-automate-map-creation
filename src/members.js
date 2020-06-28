@@ -2,16 +2,16 @@ const path = require('path');
 const fs = require('fs');
 const parse = require('csv-parse/lib/sync');
 const compile = require("string-template/compile");
-const csvFilePathContent = path.resolve(__dirname, '../data/data.csv')
-const csvFilePathMap = path.resolve(__dirname, '../data/map.csv')
-const csvContent = fs.readFileSync(csvFilePathContent).toString();
-const csvMapping = fs.readFileSync(csvFilePathMap).toString();
+const { getSetup } = require('./setupInstance');
+
+const removeWhiteSpaces = (text) => text.replace(/\s/g, '');
+const removeVariableWhiteSpaces = (text) => text.replace(/(?<=(\{\w+))\s(?=(\w+\}))/g, '');
 
 const mapsToTemplate = (maps) => {
     const mappingsKeys = Object.keys(maps);
 
     return mappingsKeys.reduce((accumulator, mapName) => {
-        const mappingsValue = maps[mapName];
+        const mappingsValue = removeVariableWhiteSpaces(maps[mapName]);
 
         return {
             ...accumulator,
@@ -34,16 +34,18 @@ const mappingContent = (templateMapping, contentRow) => {
 };
 
 const getMembersData = () => {
-    const contentParsed = parse(csvContent, {
-        columns: true,
+    const { DATA_SOURCE_CSV, DATA_MAP_CSV } = getSetup();
+
+    const contentParsed = parse(DATA_SOURCE_CSV, {
+        columns: header => header.map(removeWhiteSpaces),
         skip_empty_lines: true,
-        trim: true
+        trim: true,
     });
 
-    const mappingParsed = parse(csvMapping, {
+    const mappingParsed = parse(DATA_MAP_CSV, {
         columns: true,
         skip_empty_lines: true,
-        trim: true
+        trim: true,
     })[0];
 
     const mappingTemplate = mapsToTemplate(mappingParsed);

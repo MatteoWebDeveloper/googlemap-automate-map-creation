@@ -9,12 +9,11 @@ const selectors = {
         return await layerElement[layerIndex].$('[id$="-layer-header"]');
     },
     waitButtonLayerOptionByLayerIndex: async (layerIndex) => {
-        return await browser.page.waitFor((layerIndex) => {
+        return await browser.page.waitFor(eval(`(layerIndex) => {
             const layerElement = document.querySelectorAll('#featurelist-scrollable-container [layerid]')[layerIndex];
 
             return layerElement && layerElement.querySelector('[aria-label="Layer options"]') ? true : false;
-
-        }, {}, layerIndex);
+        }`), {}, layerIndex);
     },
     getOptionButtonByLayerIndex: async (layerIndex) => {
         const layerElement = await browser.page.$$('#featurelist-scrollable-container [layerid]');
@@ -28,9 +27,12 @@ const selectors = {
 };
 
 const getAllLayersNames = async () => {
-    return await browser.page.$$eval(selectors.allLayersHeader, (headers) => { 
-        return headers.map(dom => dom.textContent)
-    });
+    return await browser.page.$$eval(
+        selectors.allLayersHeader, 
+        eval(`(headers) => { 
+            return headers.map(dom => dom.textContent)
+        }`)
+    );
 };
 
 const deleteLayer = async (layerIndex) => {

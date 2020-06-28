@@ -1,6 +1,7 @@
 
 {
-    "PAGE": "https://www.google.com/maps/d/edit?hl=en&mid=19u4WApZGuJwJGfk4_iiWQNGC8TlEXbYG&ll=54.83361322148431%2C-3.4359725000000108&z=5",
+    "CHROME_MAC_EXE_PATH": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "CHROME_WIN_EXE_PATH": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
     "SLOW_MO": 20,
     "SCREEN_WIDTH": 1000,
     "SCREEN_HEIGHT": 900

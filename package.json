@@ -1,17 +1,32 @@
 {
   "name": "automate-google-map-insertion",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node src/main.js"
+  "version": "0.1.0",
+  "description": "This program open and connect your browser to automate manual interactions with your browser. It uses CSV file as data source to add your locations on yours google map.",
+  "main": "src/main.js",
+  "bin": {
+    "main": "./src/main.js"
   },
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "start": "node src/main.js",
+    "build": "pkg ./package.json --out-path=bin"
+  },
+  "pkg": {
+    "assets": [
+      ".nvmrc"
+    ],
+    "targets": [
+      "node14-macos",
+      "node14-win"
+    ]
+  },
+  "author": "Matteo Gilardoni - @MatteoWebDeveloper",
+  "license": "MIT License",
   "dependencies": {
-    "csv-parse": "^4.10.1",
-    "dotenv": "8.2.0",
-    "puppeteer": "^4.0.0",
-    "string-template": "^1.0.0"
+    "csv-parse": "4.10.1",
+    "puppeteer-core": "4.0.1",
+    "string-template": "1.0.0"
+  },
+  "devDependencies": {
+    "pkg": "4.4.8"
   }
 }

@@ -1,5 +1,5 @@
 const { spawn } = require('child_process');
-const ENV = require('dotenv').config().parsed;
+const CONFIG = require('./config.json');
 const args = ["--remote-debugging-port=9222", "--no-first-run", "--no-default-browser-check"];
 
 const getWebsocketLocation = (buffer) => {
@@ -15,13 +15,25 @@ const getWebsocketLocation = (buffer) => {
     return matchedStringArray[0];
 }
 
-const startBrowser = async () => new Promise((resolve, reject) => {
-    spawn(ENV.CHROME_EXE_PATH, args)
-        .stderr
-        .on('data', (buffer) => {
-            const webpackLocation = getWebsocketLocation(buffer);
-            resolve(webpackLocation);
-        });
+const startBrowser = async () => new Promise((resolve) => {
+    const osChromeMappaings = {
+        "win32": CONFIG.CHROME_WIN_EXE_PATH,
+        "darwin": CONFIG.CHROME_MAC_EXE_PATH
+    };
+
+    const EXE_PATH = osChromeMappaings[process.platform];
+
+    const ls = spawn(EXE_PATH, args);
+
+    ls.stderr.on('data', (buffer) => {
+        const webpackLocation = getWebsocketLocation(buffer);
+
+        if (!webpackLocation) {
+            return
+        }
+
+        resolve(webpackLocation);
+    });
 });
 
 module.exports = {

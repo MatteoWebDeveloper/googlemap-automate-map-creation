@@ -1,5 +1,5 @@
 const CONFIG = require('./config.json');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 
 class Pupeteer {
     page = null;
