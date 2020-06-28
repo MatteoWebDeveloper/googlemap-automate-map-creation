@@ -1,9 +1,10 @@
 # Generate map locations on Google map
 
-This program open and connect your browser to automate manual interactions with your browser. 
+This program open and connect your browser to automate manual interactions with your browser. <br/>
 It uses CSV file as data source to add your locations on yours google map.
 
-<img width="300" src="./docs/screenshot-google-map.png" />
+<img width="300" src="./docs/screenshot-ui-setup.png" /> 
+<img height="239" src="./docs/screenshot-google-map.png" />
 
 # Problem definition
 Maintaining 200 or more locations on a google map, it is a long and tedius work.
@@ -55,5 +56,14 @@ Luca Ferrari,  this is the AA00AAA
 install depedencies and start program
 ```
 npm i
-npm start
+npm run build:ui # if you have UI changes
+npm run app
 ```
+
+### Build executable
+```
+npm run build
+```
+
+## Credits
+Compass SVG <a href="https://www.vecteezy.com/free-vector/compass">Compass Vectors by Vecteezy</a>

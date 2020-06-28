@@ -7,26 +7,39 @@
     "main": "./src/main.js"
   },
   "scripts": {
-    "start": "node src/main.js",
-    "build": "pkg ./package.json --out-path=bin"
+    "app": "node src/main.js",
+    "build:app": "pkg ./package.json --out-path=bin",
+    "ui": "parcel ui/index.html",
+    "build:ui": "rm -r dist; parcel build ui/index.html",
+    "build": "npm run build:ui && npm run build:app"
   },
   "pkg": {
     "assets": [
-      ".nvmrc"
+      ".nvmrc",
+      "dist/*"
     ],
     "targets": [
       "node14-macos",
       "node14-win"
     ]
   },
+  "alias": {
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
+  },
   "author": "Matteo Gilardoni - @MatteoWebDeveloper",
   "license": "MIT License",
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
+    "antd": "4.3.5",
     "csv-parse": "4.10.1",
+    "express": "^4.17.1",
+    "preact": "10.4.4",
     "puppeteer-core": "4.0.1",
     "string-template": "1.0.0"
   },
   "devDependencies": {
+    "parcel": "1.12.4",
     "pkg": "4.4.8"
   }
 }
