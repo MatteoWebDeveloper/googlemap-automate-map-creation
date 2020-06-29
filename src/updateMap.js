@@ -28,6 +28,7 @@ const addLocationToMap = async (row) => {
     await browser.page.type(selectors.searchBar, row.address);
     await browser.page.keyboard.press('Enter');
 
+    await browser.page.waitFor(500); // it sometime fails here
     await browser.page.waitForSelector(selectors.addToLocationMap);
     
     // await browser.page.click(selectors.addToLocationMap); // No idea why chrome does not like it
@@ -44,6 +45,8 @@ const addLocationToMap = async (row) => {
         element.click()
         return Promise.resolve();
     }`));
+
+    await browser.page.waitFor(500); // it sometime fails here
 
     await browser.page.type(selectors.nameInput, row.locationName);
     await browser.page.type(selectors.descriptionInput, row.locationDescription);

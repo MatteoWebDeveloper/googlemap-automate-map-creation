@@ -3,4 +3,5 @@ node_modules
 .env
 bin
 dist
-.cache
+.parcel-cache
+parcel-bundle-reports

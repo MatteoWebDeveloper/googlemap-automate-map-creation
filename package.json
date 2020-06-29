@@ -2,6 +2,8 @@
   "name": "automate-google-map-insertion",
   "version": "0.1.0",
   "description": "This program open and connect your browser to automate manual interactions with your browser. It uses CSV file as data source to add your locations on yours google map.",
+  "author": "Matteo Gilardoni - @MatteoWebDeveloper",
+  "license": "MIT License",
   "main": "src/main.js",
   "bin": {
     "main": "./src/main.js"
@@ -9,8 +11,8 @@
   "scripts": {
     "app": "node src/main.js",
     "build:app": "pkg ./package.json --out-path=bin",
-    "ui": "parcel ui/index.html",
-    "build:ui": "rm -r dist; parcel build ui/index.html",
+    "ui": "webpack-dev-server --mode development --open",
+    "build:ui": "webpack --mode production",
     "build": "npm run build:ui && npm run build:app"
   },
   "pkg": {
@@ -27,19 +29,22 @@
     "react": "preact/compat",
     "react-dom": "preact/compat"
   },
-  "author": "Matteo Gilardoni - @MatteoWebDeveloper",
-  "license": "MIT License",
+  "sideEffects": ["*.css"],
   "dependencies": {
-    "@ant-design/icons": "^4.2.1",
+    "@ant-design/icons": "4.2.1",
     "antd": "4.3.5",
     "csv-parse": "4.10.1",
-    "express": "^4.17.1",
+    "express": "4.17.1",
     "preact": "10.4.4",
     "puppeteer-core": "4.0.1",
     "string-template": "1.0.0"
   },
   "devDependencies": {
-    "parcel": "1.12.4",
-    "pkg": "4.4.8"
+    "@neutrinojs/preact": "9.2.0",
+    "neutrino": "9.2.0",
+    "pkg": "4.4.8",
+    "webpack": "4.43.0",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
   }
 }
