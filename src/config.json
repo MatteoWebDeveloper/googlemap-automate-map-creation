@@ -2,7 +2,5 @@
 {
     "CHROME_MAC_EXE_PATH": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "CHROME_WIN_EXE_PATH": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-    "SLOW_MO": 20,
-    "SCREEN_WIDTH": 1000,
-    "SCREEN_HEIGHT": 900
+    "SLOW_MO": 20
 }

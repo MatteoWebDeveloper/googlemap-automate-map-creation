@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 const CONFIG = require('./config.json');
-const args = ["--remote-debugging-port=9222", "--no-first-run", "--no-default-browser-check"];
+const args = ["--remote-debugging-port=9222", "--no-first-run", "--no-default-browser-check", "--start-fullscreen"];
 
 const getWebsocketLocation = (buffer) => {
     const logString = buffer.toString();

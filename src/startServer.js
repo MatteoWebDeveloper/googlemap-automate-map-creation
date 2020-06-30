@@ -1,12 +1,11 @@
 const path = require('path');
-const express = require('express');
-const app = express();
-const port = 3000;
+const http = require('http');
+const parseUrl = require('parseurl');
+const send = require('send');
+const distFolder = path.resolve(__dirname, '../dist/');
+  
+const server = http.createServer(function onRequest (req, res) {
+  send(req, parseUrl(req).pathname, { root: distFolder }).pipe(res)
+});
 
-app.use(express.static(path.resolve(__dirname, '../dist/')));
-
-app.get('/', function (req, res) {
-    res.sendFile(path.resolve(__dirname, '../dist/index.html'))
-  })
-
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+server.listen(3000);

@@ -7,10 +7,7 @@ class Pupeteer {
     start = async (websocketLocation) => {
         const connectOptions = {
             browserWSEndpoint: websocketLocation,
-            defaultViewport: {
-                width: parseInt(CONFIG.SCREEN_WIDTH),
-                height: parseInt(CONFIG.SCREEN_HEIGHT)
-            },
+            defaultViewport: null,
             slowMo: parseInt(CONFIG.SLOW_MO)
         };
     
