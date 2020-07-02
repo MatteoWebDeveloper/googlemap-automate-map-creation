@@ -1,4 +1,4 @@
-# Generate map locations on Google map
+# CSV To Google map
 
 ## Problem definition
 When you have to create and keep up to date 200+ locations on a google map, it is not a fun task. It's repetitive, error prone and boring.
