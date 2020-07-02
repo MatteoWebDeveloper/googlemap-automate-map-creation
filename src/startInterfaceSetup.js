@@ -5,7 +5,7 @@ const startInterfaceSetup = async () => {
     await browser.page.goto('http://localhost:3000/');
     
     await browser.page.waitFor(eval(`() => {
-        return mockOnSubmit.calls > 0;
+        return window.mockOnSubmit && window.mockOnSubmit.calls > 0;
     }`), { timeout: 0 });
 
     const formData = await browser.page.evaluate(eval(`async () => {

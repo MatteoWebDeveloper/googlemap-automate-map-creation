@@ -18,7 +18,7 @@
   "pkg": {
     "assets": [
       ".nvmrc",
-      "dist/*"
+      "dist/**"
     ],
     "targets": [
       "node14-macos",
@@ -29,17 +29,13 @@
     "react": "preact/compat",
     "react-dom": "preact/compat"
   },
-  "sideEffects": [
-    "*.css"
-  ],
   "dependencies": {
     "@ant-design/icons": "4.2.1",
     "antd": "4.3.5",
     "csv-parse": "4.10.1",
-    "parseurl": "1.3.3",
+    "express": "4.17.1",
     "preact": "10.4.4",
     "puppeteer-core": "4.0.1",
-    "send": "0.17.1",
     "string-template": "1.0.0"
   },
   "devDependencies": {
