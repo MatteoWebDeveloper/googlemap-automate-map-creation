@@ -1,7 +1,7 @@
 # Generate map locations on Google map
 
-This program open and connect your browser to automate manual interactions with your browser. <br/>
-It uses CSV file as data source to add your locations on yours google map.
+This program opens and connects your browser to automate manual interactions with your browser. <br/>
+It uses CSV file as data source to add customised locations on your google map.
 
 <img width="300" src="./docs/screenshot-ui-setup.png" /> 
 <img height="239" src="./docs/screenshot-google-map.png" />

@@ -1,7 +1,7 @@
 {
   "name": "automate-google-map-insertion",
   "version": "0.1.0",
-  "description": "This program open and connect your browser to automate manual interactions with your browser. It uses CSV file as data source to add your locations on yours google map.",
+  "description": "This program opens and connects your browser to automate manual interactions with your browser. It uses CSV file as data source to add customised locations on your google map.",
   "author": "Matteo Gilardoni - @MatteoWebDeveloper",
   "license": "MIT License",
   "main": "src/main.js",
