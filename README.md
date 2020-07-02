@@ -1,15 +1,18 @@
 # Generate map locations on Google map
 
-This program opens and connects your browser to automate manual interactions with your browser. <br/>
-It uses CSV file as data source to add customised locations on your google map.
+## Problem definition
+When you have to create and keep up to date 200+ locations on a google map, it is not a fun task. It's repetitive, error prone and boring.
+We were already using Google spreadsheet to keep customers business informations and location inside a Google spreadsheet. Because we were already maintaining the spreadsheet data, it felt like we were doing double work when updating Google map and that's why I started to build a solution to this problem.
+
+## Product proposition
+I created a program which opens your browser, start an interface where you instract the program what data it should use and where it should do the work on google map. It then start the automation process using the CSV data you provided to add your locations on google map.
 
 <img width="300" src="./docs/screenshot-ui-setup.png" /> 
 <img height="239" src="./docs/screenshot-google-map.png" />
 
-# Problem definition
-Maintaining 200 or more locations on a google map, it is a long and tedius work.
-I looked for a solution to automate this repetitive work.
-I tried first to use pupeteer chronium and to *launch* my chrome browser but it was not possible to login to google map.
+## Biggest hardles
+Where I faced most problems was to login to a google account.
+I tried first to use pupeteer to *launch* chronium browser and then chrome too. But on both cases I did not have access to Google account information:
 
 <img width="300" src="./docs/screenshot-user.png" />
 
@@ -17,7 +20,11 @@ Google has also some security against automation tool.
 
 <img width="300" src="./docs/screenshot-google-sign-in.png" />
 
-I then used puppeteer *connect* and started my browser with `remote-debugging-port` flag to allow puppeteer to communicate with my browser with websocket.
+## Technical solutions
+- [puppeteer](https://github.com/puppeteer/puppeteer/) to control chrome browser actions 
+- puppeteer *connect* to have access to Google account and I start the browser with `remote-debugging-port` flag to allow puppeteer to communicate with my browser through websocket.
+- [express](https://expressjs.com/), [preact](https://preactjs.com/) to serve and render the interface to prepare the automation work
+- [pkg](https://github.com/vercel/pkg) to package the application into an executable for MacOs and Windows 
 
 ## Setup interface
 When you start the application it will render a UI in the browser
