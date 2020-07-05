@@ -1,22 +1,36 @@
 import './App.css';
-import { h, Fragment } from 'preact';
-import { useRef, useState, useEffect } from 'preact/compat';
-import { Input, Button } from 'antd';
-import { FileExcelTwoTone, RocketOutlined, CompassTwoTone, UploadOutlined } from '@ant-design/icons';
+import { h } from 'preact';
+import { useRef, useState } from 'preact/compat';
+import { Steps, Button } from 'antd';
+import { RocketOutlined } from '@ant-design/icons';
+import { StepUrl } from './StepUrl';
+import { StepData } from './StepData';
+import { StepMap } from './StepMap';
 import { createSpy } from './spy';
+const { Step } = Steps;
 
 window.mockOnSubmit = createSpy(function () {
     console.log('[LOG] submitted');
 });
 
+const steps = [
+    {
+      title: 'URL',
+    },
+    {
+      title: 'Data',
+    },
+    {
+      title: 'Instructions',
+    },
+];
+
 export function App () {
     const refApp = useRef();
-    const refInputDataSource = useRef();
-    const refInputDataMap = useRef();
     const [pageURL, setPageURL] = useState("");
     const [dataSourceCsv, setDataSourceCsv] = useState("");
     const [dataMapCsv, setDataMapCsv] = useState("");
-    const [stepIndex, setStepIndex] = useState(0);
+    const [stepIndex, setStepIndex] = useState(2);
 
     const LAST_STEP = 2;
     const canGoBack = stepIndex > 0;
@@ -67,108 +81,68 @@ export function App () {
             <div class="app__compass" />
             <main class="app__page">
                 <h1 class="app__title">📦 CSV To Google Map 🌍</h1>
+
+                <div class="app__steps-layout">
+                    <Steps current={stepIndex}>
+                        {steps.map(item => (
+                            <Step key={item.title} title={item.title} />
+                        ))}
+                    </Steps>
+                </div>
                 
                 <form id="form-setup" onSubmit={handleSubmit} class="app__form" >
-                    <div class="app__step-layout">
-                        <div class={`app__step ${isLastStep && 'app__step--last'}`}>
-                            {stepIndex + 1}
-                        </div>
-                    </div>
-
                     {stepIndex === 0 && (
-                        <section class="app__section">
-                            <h2>Where do you wish I do the work?</h2>
-                            <p class="app__instructions">You need to first create a map in <a href="https://www.google.com/maps/d/u/0/" target="_blank">google map</a>. Then you can copy the link in the input below so that we know where to do the work.</p>
-                            <label>
-                                <Input 
-                                    prefix={<CompassTwoTone />}
-                                    name="google-map-page" 
-                                    placeholder="Google map link" 
-                                    size="large"
-                                    onChange={(event) => setPageURL(event.target.value)} 
-                                />
-                            </label>
-                        </section>
+                        <StepUrl onChange={(event) => setPageURL(event.target.value)} />
                     )}
 
                     {stepIndex === 1 && (
-                        <section class="app__section">
-                            <h2>What data you wish to use?</h2>
-                            <p class="app__instructions">Create a spreadsheet and export it to CSV format, each row need to at least contain an address. Click the button below to load the CSV.</p>
-                            <div class="app__file-upload">
-                                <label onClick={() => refInputDataSource.current.click()}>
-                                    <input ref={refInputDataSource} type="file" name="data-source-csv" accept=".csv" onChange={(event) => setDataSourceCsv(event.target.value)} />
-                                    
-                                    <Button size="large" >
-                                        <UploadOutlined /> Upload Data source CSV
-                                    </Button>
-                                </label>
-
-                                {dataSourceCsv && (
-                                    <div class="app__file-preview">
-                                        <FileExcelTwoTone /> {dataSourceCsv}
-                                    </div>
-                                )}
-                            </div>
-                        </section>
+                        <StepData 
+                            file={dataSourceCsv} 
+                            onChange={(event) => setDataSourceCsv(event.target.value)}
+                        />
                     )}
 
                     {stepIndex === LAST_STEP && (
-                        <section class="app__section">
-                            <h2>Where I should place your data on the map?</h2>
-                            <p class="app__instructions"></p>
-                            <div class="app__file-upload">
-                                <label onClick={() => refInputDataMap.current.click()}>
-                                    <input ref={refInputDataMap} type="file" name="data-map-csv" accept=".csv" onChange={(event) => setDataMapCsv(event.target.value)}/>
-                                    
-                                    <Button size="large" >
-                                        <UploadOutlined /> Upload Data mapping CSV
-                                    </Button>
-                                </label>
-
-                                {dataMapCsv && (
-                                    <div class="app__file-preview">
-                                        <FileExcelTwoTone /> {dataMapCsv}
-                                    </div>
-                                )}
-                            </div>
-                        </section>
+                        <StepMap 
+                            file={dataMapCsv} 
+                            onChange={(event) => setDataMapCsv(event.target.value)}
+                        />
                     )}
-                    
-                    <div class="app__navigation-layout">
-                        {canGoBack && (
-                            <Button 
-                                size="large" 
-                                onClick={handleBackStep} 
-                                className="app__back"
-                            >
-                                Back
-                            </Button>)
-                        }
-
-                        {canGoNext && (
-                            <Button 
-                                size="large" 
-                                onClick={handleNextStep} 
-                                className="app__next"
-                            >
-                            Next
-                            </Button>)
-                        }
-
-                        {isLastStep && (
-                            <Button 
-                                htmlType="submit"
-                                type="primary" 
-                                size="large" 
-                                icon={<RocketOutlined />}
-                                className="app__next"
-                            >
-                                Submit
-                            </Button>)
-                        }
-                    </div>
                 </form>
+
+                <div class="app__navigation-layout">
+                    {canGoBack && (
+                        <Button 
+                            size="large" 
+                            onClick={handleBackStep} 
+                            className="app__back"
+                        >
+                            Back
+                        </Button>)
+                    }
+
+                    {canGoNext && (
+                        <Button 
+                            size="large" 
+                            onClick={handleNextStep} 
+                            className="app__next"
+                        >
+                            Next
+                        </Button>)
+                    }
+
+                    {isLastStep && (
+                        <Button 
+                            htmlType="submit"
+                            type="primary" 
+                            size="large" 
+                            icon={<RocketOutlined />}
+                            className="app__next"
+                        >
+                            Submit
+                        </Button>)
+                    }
+                </div>
             </main>
         </div>
     )
