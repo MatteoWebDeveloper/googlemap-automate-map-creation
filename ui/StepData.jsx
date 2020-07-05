@@ -1,10 +1,32 @@
 import { h } from 'preact';
-import { useRef } from 'preact/compat';
-import { Button } from 'antd';
+import { useState, useEffect, useRef } from 'preact/compat';
+import { Button, Table } from 'antd';
 import { FileExcelTwoTone, UploadOutlined } from '@ant-design/icons';
+import { csvToTable } from './csvToTable';
 
 export function StepData ({onChange, file}) {
     const refInputDataSource = useRef();
+    const [csvTable, setCsvTable] = useState({
+        columns: [],
+        content: [],
+    });
+
+    useEffect(async () => {
+        if (!file) {
+            return;
+        }
+
+        const csvText = await file.text();
+        const { columns, content } = csvToTable(csvText);
+
+        setCsvTable({
+            columns,
+            content
+        });
+    }, [file])
+
+    console.log('LOG columns', csvTable.columns);
+    console.log('LOG content', csvTable.content);
 
     return (
         <section class="app__section">
@@ -21,11 +43,18 @@ export function StepData ({onChange, file}) {
 
                 {file && (
                     <div class="app__file-preview">
-                        <FileExcelTwoTone /> {file}
+                        <FileExcelTwoTone /> {file.name}
                     </div>
                 )}
 
-                {/* TODO preview here CSV */}
+                {/* {file && (
+                    <div>
+                        <Table 
+                            columns={csvTable.columns}
+                            dataSource={csvTable.content} 
+                        />
+                    </div>
+                )} */}
             </div>
         </section>
     )

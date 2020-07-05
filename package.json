@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "4.2.1",
-    "antd": "4.3.5",
+    "antd": "4.4.0",
     "csv-parse": "4.10.1",
     "express": "4.17.1",
     "file-saver": "2.0.2",

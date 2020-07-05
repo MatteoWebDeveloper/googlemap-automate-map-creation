@@ -6,37 +6,27 @@ import { RocketOutlined } from '@ant-design/icons';
 import { StepUrl } from './StepUrl';
 import { StepData } from './StepData';
 import { StepMap } from './StepMap';
-import { createSpy } from './spy';
 const { Step } = Steps;
 
-window.mockOnSubmit = createSpy(function () {
-    console.log('[LOG] submitted');
-});
+window.puppeteerData = null;
 
 const steps = [
-    {
-      title: 'URL',
-    },
-    {
-      title: 'Data',
-    },
-    {
-      title: 'Instructions',
-    },
+    { title: 'URL' },
+    { title: 'Data' },
+    { title: 'Instructions' },
 ];
 
 export function App () {
     const refApp = useRef();
     const [pageURL, setPageURL] = useState("");
-    const [dataSourceCsv, setDataSourceCsv] = useState("");
-    const [dataMapCsv, setDataMapCsv] = useState("");
-    const [stepIndex, setStepIndex] = useState(2);
+    const [dataSourceCsv, setDataSourceCsv] = useState(null);
+    const [dataMapCsv, setDataMapCsv] = useState(null);
+    const [stepIndex, setStepIndex] = useState(0);
 
     const LAST_STEP = 2;
     const canGoBack = stepIndex > 0;
     const canGoNext = stepIndex < (LAST_STEP);
     const isLastStep = stepIndex === LAST_STEP;
-
     const canSubmit = pageURL && dataSourceCsv && dataMapCsv;
     
     const handleBackStep = () => {
@@ -50,30 +40,24 @@ export function App () {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!isLastStep) {
-            return;
-        }
-
         if (!canSubmit) {
-            alert('Some fields are empty');
+            alert('One or more steps are not completed');
             return;
         }
 
-        window.mockOnSubmit();
-
-        const formData = new FormData(document.querySelector('#form-setup'));
-
-        const PAGE = formData.get('google-map-page');
-        const DATA_SOURCE_CSV = await formData.get('data-source-csv').text();
-        const DATA_MAP_CSV = await formData.get('data-map-csv').text();
+        const PAGE = pageURL;
+        const DATA_SOURCE_CSV = await dataSourceCsv.text();
+        const DATA_MAP_CSV = await dataMapCsv.text();
         
         const transferData = {
             PAGE,
             DATA_SOURCE_CSV,
             DATA_MAP_CSV,
         };
+
+        window.puppeteerData = transferData;
         
-        console.log(transferData);
+        console.log(window.puppeteerData);
     }
 
     return (
@@ -98,14 +82,14 @@ export function App () {
                     {stepIndex === 1 && (
                         <StepData 
                             file={dataSourceCsv} 
-                            onChange={(event) => setDataSourceCsv(event.target.value)}
+                            onChange={(event) => setDataSourceCsv(event.target.files[0])}
                         />
                     )}
 
                     {stepIndex === LAST_STEP && (
                         <StepMap 
                             file={dataMapCsv} 
-                            onChange={(event) => setDataMapCsv(event.target.value)}
+                            onChange={(event) => setDataMapCsv(event.target.files[0])}
                         />
                     )}
                 </form>
@@ -137,6 +121,7 @@ export function App () {
                             type="primary" 
                             size="large" 
                             icon={<RocketOutlined />}
+                            onClick={handleSubmit}
                             className="app__next"
                         >
                             Submit

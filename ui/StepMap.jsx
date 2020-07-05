@@ -53,7 +53,7 @@ export function StepMap ({onChange, file}) {
 
                 {file && (
                     <div class="app__file-preview">
-                        <FileExcelTwoTone /> {file}
+                        <FileExcelTwoTone /> {file.name}
                     </div>
                 )}
                 
@@ -70,7 +70,7 @@ export function StepMap ({onChange, file}) {
                                 onChange={handleNewInstructions}
                             />
 
-                            <Popover content={<img width="400" height="44" src={addressImage} />}>
+                            <Popover title="Search address" content={<img width="400" height="44" src={addressImage} />}>
                                 <InfoCircleTwoTone />
                             </Popover>
                         </label>
@@ -83,7 +83,7 @@ export function StepMap ({onChange, file}) {
                                 onChange={handleNewInstructions}
                             />
 
-                            <Popover content={<img width="441" height="203" src={layerImage} />}>
+                            <Popover title="We add your location mark under layer name" content={<img width="400" height="165" src={layerImage} />}>
                                 <InfoCircleTwoTone />
                             </Popover>
                         </label>
@@ -96,7 +96,7 @@ export function StepMap ({onChange, file}) {
                                 onChange={handleNewInstructions} 
                             />
 
-                            <Popover content={<img width="405" height="193" src={locationImage} />}>
+                            <Popover title="We add location name" content={<img width="405" height="193" src={locationImage} />}>
                                 <InfoCircleTwoTone />
                             </Popover>
                         </label>
@@ -109,7 +109,7 @@ export function StepMap ({onChange, file}) {
                                 onChange={handleNewInstructions} 
                             />
 
-                            <Popover content={<img width="405" height="193" src={locationImage} />}>
+                            <Popover title="We add location description" content={<img width="405" height="193" src={locationImage} />}>
                                 <InfoCircleTwoTone />
                             </Popover>
                         </label>

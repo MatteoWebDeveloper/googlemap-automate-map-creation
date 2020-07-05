@@ -4,27 +4,9 @@ const { saveSetup } = require('./setupInstance');
 const startInterfaceSetup = async () => {
     await browser.page.goto('http://localhost:3000/');
     
-    await browser.page.waitFor(eval(`() => {
-        return window.mockOnSubmit && window.mockOnSubmit.calls > 0;
-    }`), { timeout: 0 });
+    await browser.page.waitFor(eval(`() => window.puppeteerData !== null`), { timeout: 0 });
 
-    const formData = await browser.page.evaluate(eval(`async () => {
-        const formData = new FormData(document.querySelector('#form-setup'));
-
-        const PAGE = formData.get('google-map-page');
-        const DATA_SOURCE_CSV = await formData.get('data-source-csv').text();
-        const DATA_MAP_CSV = await formData.get('data-map-csv').text();
-        
-        const transferData = {
-            PAGE,
-            DATA_SOURCE_CSV,
-            DATA_MAP_CSV,
-        };
-        
-        console.log(transferData);
-
-        return transferData;
-    }`));
+    const formData = await browser.page.evaluate(eval(`async () => window.puppeteerData`));
 
     console.log('[LOG] Setup Data', formData);
 
