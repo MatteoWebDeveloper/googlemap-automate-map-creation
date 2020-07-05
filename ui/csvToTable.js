@@ -17,7 +17,6 @@ export const csvToTable = (csvString) => {
     const tableContent = csvStructure.map((row, index) => {
         const rowContent = row.reduce((accumulator, currentValue, index) => {
             const columnName = columns[index];
-            console.log()
             
             return { 
                 ...accumulator, 

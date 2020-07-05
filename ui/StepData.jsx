@@ -25,9 +25,6 @@ export function StepData ({onChange, file}) {
         });
     }, [file])
 
-    console.log('LOG columns', csvTable.columns);
-    console.log('LOG content', csvTable.content);
-
     return (
         <section class="app__section">
             <h2>What data you wish to use?</h2>

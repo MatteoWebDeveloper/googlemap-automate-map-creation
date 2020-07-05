@@ -1,13 +1,13 @@
 import { h } from 'preact';
 import { useState, useRef } from 'preact/compat';
 import FileSaver from 'file-saver';
-import { Input, Button, Popover } from 'antd';
+import { Input, Button, Tag, Popover, message } from 'antd';
 import { InfoCircleTwoTone, FileExcelTwoTone, UploadOutlined } from '@ant-design/icons';
 import addressImage from './assets/address.png';
 import layerImage from './assets/layer.png';
 import locationImage from './assets/location.png';
 
-export function StepMap ({onChange, file}) {
+export function StepMap ({onChange, file, columns = []}) {
     const refInputDataMap = useRef();
     const [mapData, setMapData] = useState({
         address: "",
@@ -20,6 +20,13 @@ export function StepMap ({onChange, file}) {
 
     const handleNewInstructions = (event) => {
         setMapData((data) => ({...data, [event.target.name]: event.target.value }))
+    };
+
+    const handleTagClick = async (event) => {
+        const text = event.target.textContent;
+        await navigator.clipboard.writeText(text);
+
+        message.success(`Copied: ${text}`);
     };
 
     const handleDownload = () => {
@@ -61,6 +68,10 @@ export function StepMap ({onChange, file}) {
                     <h3>Or create a new one</h3>
                     <p class="app__instructions">Add Column names and text into the input like the following example: <code>{'{'}Column name{'}'} static text</code></p>
 
+                <p>
+                    List columns: 
+                    {columns.map((columnName) => <Tag onClick={handleTagClick}>{`{${columnName}}`}</Tag>)}
+                </p>
                     <div class="app__step-map-inputs">
                         <label>
                             <Input 

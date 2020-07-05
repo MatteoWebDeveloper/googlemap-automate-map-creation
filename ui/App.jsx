@@ -6,6 +6,7 @@ import { RocketOutlined } from '@ant-design/icons';
 import { StepUrl } from './StepUrl';
 import { StepData } from './StepData';
 import { StepMap } from './StepMap';
+import { csvToTable } from './csvToTable';
 const { Step } = Steps;
 
 window.puppeteerData = null;
@@ -20,6 +21,7 @@ export function App () {
     const refApp = useRef();
     const [pageURL, setPageURL] = useState("");
     const [dataSourceCsv, setDataSourceCsv] = useState(null);
+    const [dataSourceColumns, setDataSourceColumns] = useState([]);
     const [dataMapCsv, setDataMapCsv] = useState(null);
     const [stepIndex, setStepIndex] = useState(0);
 
@@ -36,6 +38,17 @@ export function App () {
     const handleNextStep = () => {
         setStepIndex((index) => index + 1);
     };
+
+    const handleDataCsv = async (event) => {
+        const file = event.target.files[0];
+        
+        setDataSourceCsv(file);
+        
+        const csvText = await file.text();
+        const { columns } = csvToTable(csvText);
+
+        setDataSourceColumns(columns.map(column => column.title));
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -82,13 +95,14 @@ export function App () {
                     {stepIndex === 1 && (
                         <StepData 
                             file={dataSourceCsv} 
-                            onChange={(event) => setDataSourceCsv(event.target.files[0])}
+                            onChange={handleDataCsv}
                         />
                     )}
 
                     {stepIndex === LAST_STEP && (
                         <StepMap 
                             file={dataMapCsv} 
+                            columns={dataSourceColumns}
                             onChange={(event) => setDataMapCsv(event.target.files[0])}
                         />
                     )}
