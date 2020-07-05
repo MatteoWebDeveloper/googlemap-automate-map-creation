@@ -1,11 +1,14 @@
-import { h } from 'preact';
-import { useState, useRef } from 'preact/compat';
+import { h, Fragment } from 'preact';
+import { useState, useEffect, useRef } from 'preact/compat';
 import FileSaver from 'file-saver';
 import { Input, Button, Tag, Popover, message } from 'antd';
 import { InfoCircleTwoTone, FileExcelTwoTone, UploadOutlined } from '@ant-design/icons';
 import addressImage from './assets/address.png';
 import layerImage from './assets/layer.png';
 import locationImage from './assets/location.png';
+
+const PAGE_UPLOAD = 'upload';
+const PAGE_CREATE = 'create';
 
 export function StepMap ({onChange, file, columns = []}) {
     const refInputDataMap = useRef();
@@ -16,10 +19,25 @@ export function StepMap ({onChange, file, columns = []}) {
         locationDescription: "",
     });
 
+    const [page, setPage] = useState(PAGE_UPLOAD);
+
     const canDownload = Object.values(mapData).every(value => value !== "");
 
+    const createCsvFile = () => {
+        const csvData = [
+            Object.keys(mapData),
+            Object.values(mapData)
+        ];
+
+        const csvString = csvData.map(e => e.join(",")).join("\n");
+
+        return new File([csvString], 'instructions.csv', {
+            type: "text/csv;charset=utf-8",
+        });
+    };
+
     const handleNewInstructions = (event) => {
-        setMapData((data) => ({...data, [event.target.name]: event.target.value }))
+        setMapData((data) => ({...data, [event.target.name]: event.target.value }));
     };
 
     const handleTagClick = async (event) => {
@@ -30,48 +48,57 @@ export function StepMap ({onChange, file, columns = []}) {
     };
 
     const handleDownload = () => {
-        const csvData = [
-            Object.keys(mapData),
-            Object.values(mapData)
-        ];
+        const file = createCsvFile();
 
-        const csvString = csvData.map(e => e.join(",")).join("\n");
-
-        var blob = new Blob([csvString], {type: "text/csv;charset=utf-8"});
-        FileSaver.saveAs(blob, "google_map_instructions.csv");
+        FileSaver.saveAs(file, "google_map_instructions.csv");
     }
 
-    return (
-        <section class="app__section">
-            <h2>How I should place your data on the map?</h2>
+    useEffect(() => {
+        if (canDownload) {
+            const file = createCsvFile();
             
-            <p class="app__instructions">
-                Upload existing instructions spreadsheet
-            </p>
+            onChange(file);
+        }
+    }, [canDownload])
 
-            <div class="app__file-upload">
-                <label onClick={() => refInputDataMap.current.click()}>
-                    <input ref={refInputDataMap} type="file" name="data-map-csv" accept=".csv" onChange={onChange}/>
+    return (
+        <Fragment>
+            {page === PAGE_UPLOAD && (
+                <section class="app__section">
+                    <h2>How I should place your data on the map?</h2>
                     
-                    <Button size="large" >
-                        <UploadOutlined /> Upload Instructions CSV
-                    </Button>
-                </label>
+                    <p class="app__instructions">
+                        Upload existing instructions spreadsheet or <a onClick={() => setPage(PAGE_CREATE)}>create new one.</a>
+                    </p>
 
-                {file && (
-                    <div class="app__file-preview">
-                        <FileExcelTwoTone /> {file.name}
+                    <div class="app__file-upload">
+                        <label onClick={() => refInputDataMap.current.click()}>
+                            <input ref={refInputDataMap} type="file" name="data-map-csv" accept=".csv" onChange={(event) => onChange(event.target.files[0])}/>
+                            
+                            <Button size="large" >
+                                <UploadOutlined /> Upload Instructions CSV
+                            </Button>
+                        </label>
+
+                        {file && (
+                            <div class="app__file-preview">
+                                <FileExcelTwoTone /> {file.name}
+                            </div>
+                        )}
                     </div>
-                )}
-                
-                <div class="app__step-map-create-layout">
-                    <h3>Or create a new one</h3>
+                </section>)
+            }
+
+            {page === PAGE_CREATE && (
+                <section class="app__section">
+                    <h2>Create instructions CSV</h2>
+
                     <p class="app__instructions">Add Column names and text into the input like the following example: <code>{'{'}Column name{'}'} static text</code></p>
 
-                <p>
-                    List columns: 
-                    {columns.map((columnName) => <Tag onClick={handleTagClick}>{`{${columnName}}`}</Tag>)}
-                </p>
+                    <p>
+                        List columns: 
+                        {columns.map((columnName) => <Tag onClick={handleTagClick}>{`{${columnName}}`}</Tag>)}
+                    </p>
                     <div class="app__step-map-inputs">
                         <label>
                             <Input 
@@ -131,10 +158,10 @@ export function StepMap ({onChange, file, columns = []}) {
                         disabled={!canDownload} 
                         onClick={handleDownload}
                     >
-                        Download instructions CSV
+                        Save instructions CSV
                     </Button>
-                </div>
-            </div>
-        </section>
+                </section>)
+            }
+        </Fragment>
     )
 }

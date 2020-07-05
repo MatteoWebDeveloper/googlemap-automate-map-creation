@@ -103,7 +103,7 @@ export function App () {
                         <StepMap 
                             file={dataMapCsv} 
                             columns={dataSourceColumns}
-                            onChange={(event) => setDataMapCsv(event.target.files[0])}
+                            onChange={(file) => setDataMapCsv(file)}
                         />
                     )}
                 </form>
