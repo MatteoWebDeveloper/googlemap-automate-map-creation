@@ -47,7 +47,7 @@ export function App () {
         const csvText = await file.text();
         const { columns } = csvToTable(csvText);
 
-        setDataSourceColumns(columns.map(column => column.title));
+        setDataSourceColumns(columns);
     }
 
     const handleSubmit = async (event) => {
