@@ -65,11 +65,13 @@ export function StepMap ({onChange, file, columns = []}) {
         <Fragment>
             {page === PAGE_UPLOAD && (
                 <section class="app__section">
-                    <h2>How I should place your data on the map?</h2>
-                    
-                    <p class="app__instructions">
-                        Upload existing instructions spreadsheet or <a onClick={() => setPage(PAGE_CREATE)}>create new one.</a>
-                    </p>
+                    <div class="app__instructions-layout">
+                        <h2>How I should place your data on the map?</h2>
+                        
+                        <p class="app__instructions">
+                            Upload existing instructions spreadsheet or <a onClick={() => setPage(PAGE_CREATE)}>create new one.</a>
+                        </p>
+                    </div>
 
                     <div class="app__file-upload">
                         <label onClick={() => refInputDataMap.current.click()}>
@@ -91,14 +93,17 @@ export function StepMap ({onChange, file, columns = []}) {
 
             {page === PAGE_CREATE && (
                 <section class="app__section">
-                    <h2>Create instructions CSV</h2>
+                    <div class="app__instructions-layout">
+                        <h2>Create instructions CSV</h2>
 
-                    <p class="app__instructions">Add Column names and text into the input like the following example: <code>{'{'}Column name{'}'} static text</code></p>
+                        <p class="app__instructions">Add Column names and text into the input like the following example: <code>{'{'}Column name{'}'} static text</code></p>
+                    </div>
 
                     <p>
                         List columns: 
                         {columns.map((columnName) => <Tag onClick={handleTagClick}>{`{${columnName}}`}</Tag>)}
                     </p>
+
                     <div class="app__step-map-inputs">
                         <label>
                             <Input 

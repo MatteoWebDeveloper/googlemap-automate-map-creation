@@ -1,4 +1,4 @@
-Type, Surname, Forename, Shop name, Postcode, Trade
-SM, Rossi, Giuseppe, Rossi negozio, SE19RA, developer
-F, Russo, Maria, Maria tutti frutti, EC4V4DD, teacher
-SM, Ferrari, Anna, Anna boutique, WC2R2PH, nurse
+Type, Surname, Forename, Shop name, Postcode, Trade, Product
+SM, Rossi, Giuseppe, Rossi negozio, SE19RA, developer, software
+F, Russo, Maria, Maria tutti frutti, EC4V4DD, teacher, educational material
+SM, Ferrari, Anna, Anna boutique, WC2R2PH, nurse, medicine

@@ -87,7 +87,7 @@ export function App () {
                     </Steps>
                 </div>
                 
-                <form id="form-setup" onSubmit={handleSubmit} class="app__form" >
+                <form id="form-setup" onSubmit={handleSubmit} class="app__form-layout" >
                     {stepIndex === 0 && (
                         <StepUrl onChange={(event) => setPageURL(event.target.value)} />
                     )}

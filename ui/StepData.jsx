@@ -29,8 +29,11 @@ export function StepData ({onChange, file}) {
 
     return (
         <section class="app__section">
-            <h2>What data you wish to use?</h2>
-            <p class="app__instructions">Create a spreadsheet and export it to CSV format, each row need to at least contain an address. Click the button below to load the CSV.</p>
+            <div class="app__instructions-layout">
+                <h2>What data you wish to use?</h2>
+                <p class="app__instructions">Create a spreadsheet and export it to CSV format, each row need to at least contain an address. Click the button below to load the CSV.</p>
+            </div>
+
             <div class="app__file-upload">
                 <label onClick={() => refInputDataSource.current.click()}>
                     <input ref={refInputDataSource} type="file" name="data-source-csv" accept=".csv" onChange={onChange} />
