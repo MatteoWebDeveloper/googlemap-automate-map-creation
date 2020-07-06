@@ -1,14 +1,15 @@
 import { h } from 'preact';
 import { useState, useEffect, useRef } from 'preact/compat';
-import { Button, Table } from 'antd';
+import { Button } from 'antd';
 import { FileExcelTwoTone, UploadOutlined } from '@ant-design/icons';
 import { csvToTable } from './csvToTable';
+import { ExcelTable } from './ExcelTable';
 
 export function StepData ({onChange, file}) {
     const refInputDataSource = useRef();
     const [csvTable, setCsvTable] = useState({
         columns: [],
-        content: [],
+        rows: [],
     });
 
     useEffect(async () => {
@@ -17,11 +18,12 @@ export function StepData ({onChange, file}) {
         }
 
         const csvText = await file.text();
-        const { columns, content } = csvToTable(csvText);
+        const { columns, rows } = csvToTable(csvText);
+        const limitRows = rows.filter((value, index) => index < 10);
 
         setCsvTable({
             columns,
-            content
+            rows: limitRows
         });
     }, [file])
 
@@ -44,14 +46,11 @@ export function StepData ({onChange, file}) {
                     </div>
                 )}
 
-                {/* {file && (
-                    <div>
-                        <Table 
-                            columns={csvTable.columns}
-                            dataSource={csvTable.content} 
-                        />
+                {file && (
+                    <div class="app__step-data-preview">
+                        <ExcelTable data={csvTable} isPreview />
                     </div>
-                )} */}
+                )}
             </div>
         </section>
     )

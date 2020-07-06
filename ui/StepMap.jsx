@@ -56,10 +56,10 @@ export function StepMap ({onChange, file, columns = []}) {
     useEffect(() => {
         if (canDownload) {
             const file = createCsvFile();
-            
+    
             onChange(file);
         }
-    }, [canDownload])
+    }, [canDownload, mapData])
 
     return (
         <Fragment>

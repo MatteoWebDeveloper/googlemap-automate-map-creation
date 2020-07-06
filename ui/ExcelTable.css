@@ -1,0 +1,29 @@
+.excel-table {
+    position: relative;
+    border: 1px solid #c4c4c4;
+    background-color: #ffffff;
+}
+
+.excel-table--preview::before {
+    content: '';
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    background-image: linear-gradient(180deg, rgba(255,255,255,0) 30%, rgb(230, 247, 255) 80%);
+    left: 0;
+}
+
+.excel-table th {
+    padding: 3px;
+    border: 1px solid #e2e2e3;
+    background-color: #f8f9fa;
+    color: #5f6368;
+}
+
+.excel-table td {
+    padding: 3px;
+    border: 1px solid #dbdbdb;
+    color: black;
+}
+
