@@ -1,5 +1,5 @@
 const browser = require('./pupeteerInstance');
-const { saveSetup } = require('./setupInstance');
+const { saveUserSetup } = require('./setupInstance');
 
 const startInterfaceSetup = async () => {
     await browser.page.goto('http://localhost:3000/');
@@ -10,7 +10,7 @@ const startInterfaceSetup = async () => {
 
     console.log('[LOG] Setup Data', formData);
 
-    saveSetup(formData);
+    saveUserSetup(formData);
 }
 
 module.exports = {

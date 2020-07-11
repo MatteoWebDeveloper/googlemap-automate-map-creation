@@ -50,4 +50,5 @@ npm run build
 ```
 
 ## Credits
+- Copy editing by <a href="https://www.linkedin.com/in/yananzhu/">Yanan Zhu</a>
 - Compass Vectors by <a href="https://www.vecteezy.com/free-vector/compass">Vecteezy</a>

@@ -1,2 +1,2 @@
-layerName, address, locationName, locationDescription
-{Type}, {Postcode}, {Shop name} - {Forename} {Surname}, {Trade}
+layerName, address, locationName, locationDescription, icon, color 
+{Type}, {Postcode}, {Shop name} - {Forename} {Surname}, {Trade}, {Symbol}, {Color}

@@ -1,17 +1,31 @@
-require("./startServer"); 
-const { startBrowser } = require("./startBrowser"); 
+require("./ui-server"); 
+const { startBrowser } = require("./browser"); 
 const { start: startPupeteer } = require("./pupeteerInstance"); 
-const { startGoogleMap } = require("./startGoogleMap"); 
-const { startInterfaceSetup } = require("./startInterfaceSetup"); 
+const { startGoogleMapAutomation } = require("./googleMap"); 
+const { startInterfaceSetup } = require("./userInterfaceSetup"); 
+const { mockInterfaceSetup } = require('./mockInterfaceSetup');
+const { getUserSetup } = require('./setupInstance');
+const { getCompiledUserInstructions } = require('./userData');
 
 const main = async () => {
     const websocketLocation = await startBrowser();
 
     await startPupeteer(websocketLocation);
 
-    await startInterfaceSetup();
+    if (process.env.SKIP_UI_SETUP) {
+        mockInterfaceSetup();
+    } else {
+        await startInterfaceSetup();
+    }
     
-    startGoogleMap();
+    const { PAGE, DATA_SOURCE_CSV, DATA_MAP_CSV } = getUserSetup();
+
+    const compiledUserInstructions = {
+        page: PAGE,
+        instructions: getCompiledUserInstructions(DATA_SOURCE_CSV, DATA_MAP_CSV)
+    };
+
+    startGoogleMapAutomation(compiledUserInstructions);
 }
 
 main();

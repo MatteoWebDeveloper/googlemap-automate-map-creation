@@ -23,7 +23,19 @@ const selectors = {
     inputLayerName: '#update-layer-name input',
     buttonSaveLayerName: '#update-layer-name button[name=save]',
     deleteLayerButton: '#layerview-menu[tabindex="0"] [item=delete]',
-    deleteConfirmButton: '#cannot-undo-dialog button[name=delete]'
+    deleteConfirmButton: '#cannot-undo-dialog button[name=delete]',
+    getAllLayers: async () => browser.page.$$('#featurelist-scrollable-container [layerid]'),
+    searchBar: '#mapsprosearch-field',
+    addToLocationMap: '#addtomap-button',
+    editStyle: '#map-infowindow-style-button',
+    colorItem: (color) => `#stylepopup-color [aria-label="${color}"]`,
+    moreIconsButon: "#stylepopup-moreicons-button",
+    iconButon: (icon) => `[role="dialog"] [aria-label="${icon}"]`,
+    saveIconButon: '[role="dialog"] button[name="ok"]',
+    editLocationName: '#map-infowindow-edit-button',
+    nameInput: '#map-infowindow-attr-name-value',
+    descriptionInput: '#map-infowindow-attr-description-value',
+    dialogLocationSaveButton: '#map-infowindow-done-editing-button [role=button]'
 };
 
 const getAllLayersNames = async () => {
@@ -79,7 +91,62 @@ const updateLayer = async (layerName) => {
     }
 };
 
+const deleteAllLayers = async () => {
+    const layers = await selectors.getAllLayers();
+    const layersLength = layers.length;
+
+    for (let index = 0; index < layersLength; index++) {
+        await deleteLayer(0);
+        await browser.page.waitFor(2000);
+    }
+};
+
+const addLocationToMap = async (row) => {
+    console.log('[LOG] addLocationToMap: ', row);
+
+    await browser.page.type(selectors.searchBar, row.address);
+    await browser.page.keyboard.press('Enter');
+
+    await browser.page.waitFor(500); // it sometime fails here
+    await browser.page.waitForSelector(selectors.addToLocationMap);
+    
+    // await browser.page.click(selectors.addToLocationMap); // No idea why chrome does not like it
+    await browser.page.evaluate(eval(`() => {
+        const element = document.querySelector('#addtomap-button');
+        element.click()
+        return Promise.resolve();
+    }`));
+    
+    await browser.page.waitForSelector(selectors.editLocationName);
+    // await browser.page.click(selectors.editLocationName);
+    await browser.page.evaluate(eval(`() => {
+        const element = document.querySelector('#map-infowindow-edit-button');
+        element.click();
+        return Promise.resolve();
+    }`));
+
+    await browser.page.waitFor(500); // it sometime fails here
+
+    await browser.page.type(selectors.nameInput, row.locationName);
+    await browser.page.type(selectors.descriptionInput, row.locationDescription);
+    await browser.page.click(selectors.dialogLocationSaveButton);
+
+    // change color & icon
+
+    await browser.page.click(selectors.editStyle);
+
+    await browser.page.click(selectors.colorItem(row.color));
+
+    await browser.page.click(selectors.moreIconsButon);
+
+    await browser.page.click(selectors.iconButon(row.icon));
+    
+    return await browser.page.click(selectors.saveIconButon);
+};
+
 module.exports = {
+    deleteLayer,
+    deleteAllLayers,
     updateLayer,
-    deleteLayer
+    addLocationToMap
 };

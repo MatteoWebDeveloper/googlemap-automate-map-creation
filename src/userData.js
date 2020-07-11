@@ -1,8 +1,5 @@
-const path = require('path');
-const fs = require('fs');
 const parse = require('csv-parse/lib/sync');
 const compile = require("string-template/compile");
-const { getSetup } = require('./setupInstance');
 
 const removeWhiteSpaces = (text) => text.replace(/\s/g, '');
 const removeVariableWhiteSpaces = (text) => text.replace(/(?<=(\{\w+))\s(?=(\w+\}))/g, '');
@@ -33,9 +30,7 @@ const mappingContent = (templateMapping, contentRow) => {
     }, {});
 };
 
-const getMembersData = () => {
-    const { DATA_SOURCE_CSV, DATA_MAP_CSV } = getSetup();
-
+const getCompiledUserInstructions = (DATA_SOURCE_CSV, DATA_MAP_CSV) => {
     const contentParsed = parse(DATA_SOURCE_CSV, {
         columns: header => header.map(removeWhiteSpaces),
         skip_empty_lines: true,
@@ -57,5 +52,5 @@ const getMembersData = () => {
 }
 
 module.exports = {
-    getMembersData 
+    getCompiledUserInstructions
 }

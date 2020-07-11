@@ -10,6 +10,7 @@
   },
   "scripts": {
     "app": "node src/main.js",
+    "app:skipUi": "SKIP_UI_SETUP=true node src/main.js",
     "build:app": "pkg ./package.json --out-path=bin",
     "ui": "webpack-dev-server --mode development --open",
     "build:ui": "webpack --mode production",

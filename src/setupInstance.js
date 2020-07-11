@@ -1,15 +1,16 @@
 let setup = {
+    PAGE: null,
     DATA_SOURCE_CSV: ``,
     DATA_MAP_CSV: ``
 };
 
-const saveSetup = (newSetup) => {
+const saveUserSetup = (newSetup) => {
     setup = { ...setup, ...newSetup };
 };
 
-const getSetup = () => setup;
+const getUserSetup = () => setup;
 
 module.exports = {
-    saveSetup,
-    getSetup
+    saveUserSetup,
+    getUserSetup
 };
