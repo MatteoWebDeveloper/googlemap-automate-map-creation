@@ -87,6 +87,7 @@ input[type="file"] {
     text-align: center;
     margin: 30px 0 50px 0;
     min-height: 200px;
+    width: 100%;
 }
 
 .app__section {
@@ -96,7 +97,7 @@ input[type="file"] {
 }
 
 .app__step-url-label {
-    width: 100%;
+    width: 50%;
 }
 
 .app__instructions-layout {
@@ -128,22 +129,6 @@ input[type="file"] {
     margin-top: 40px;
 }
 
-.app__step-map-inputs {
-    display: grid;
-    grid-gap: 16px;
-    grid-template-columns: 1fr 1fr;
-    margin-bottom: 20px;
-}
-
-.app__step-map-inputs label {
-    display: flex;
-    align-items: center;
-}
-
-.app__step-map-inputs input {
-    margin-right: 8px;
-}
-
 .app__navigation-layout {
     width: 60%;
     display: grid;
@@ -156,9 +141,4 @@ input[type="file"] {
 
 .app__next {
     grid-column: 3;
-}
-
-.app__step-layout {
-    display: flex;
-    justify-content: center;
 }

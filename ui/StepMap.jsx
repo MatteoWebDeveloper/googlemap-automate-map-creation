@@ -1,11 +1,14 @@
+import './step-map.css';
 import { h, Fragment } from 'preact';
 import { useState, useEffect, useRef } from 'preact/compat';
 import FileSaver from 'file-saver';
-import { Input, Button, Tag, Popover, message } from 'antd';
-import { InfoCircleTwoTone, FileExcelTwoTone, UploadOutlined } from '@ant-design/icons';
+import { Input, Button, Tag, message } from 'antd';
+import { FileExcelTwoTone, UploadOutlined } from '@ant-design/icons';
 import addressImage from './assets/address.png';
 import layerImage from './assets/layer.png';
 import locationImage from './assets/location.png';
+import colorsImage from './assets/colors.png';
+import iconsImage from './assets/icons.png';
 
 const PAGE_UPLOAD = 'upload';
 const PAGE_CREATE = 'create';
@@ -17,6 +20,8 @@ export function StepMap ({onChange, file, columns = []}) {
         layerName: "",
         locationName: "",
         locationDescription: "",
+        color: "",
+        icon: ""
     });
 
     const [page, setPage] = useState(PAGE_UPLOAD);
@@ -99,63 +104,121 @@ export function StepMap ({onChange, file, columns = []}) {
                         <p class="app__instructions">Add Column names and text into the input like the following example: <code>{'{'}Column name{'}'} static text</code></p>
                     </div>
 
-                    <p>
-                        List columns: 
-                        {columns.map((columnName) => <Tag onClick={handleTagClick}>{`{${columnName}}`}</Tag>)}
-                    </p>
-
-                    <div class="app__step-map-inputs">
+                    <div class="step-map__inputs-layout">
                         <label>
-                            <Input 
-                                name="address" 
-                                placeholder="address" 
-                                size="large"
-                                onChange={handleNewInstructions}
-                            />
+                            <h3>Search address</h3>
+                            
+                            <div class="step-map__input-layout">
+                                <Input 
+                                    name="address" 
+                                    placeholder="address" 
+                                    size="large"
+                                    onChange={handleNewInstructions}
+                                />
 
-                            <Popover title="Search address" content={<img width="400" height="44" src={addressImage} />}>
-                                <InfoCircleTwoTone />
-                            </Popover>
+                                <div class="step-map__data-explanation-use">
+                                    <p>We will use your column content as address to search the location you want to add</p>
+                                    <img width="400" height="44" src={addressImage} />
+                                </div>
+                            </div>
                         </label>
 
                         <label>
-                            <Input 
-                                name="layerName" 
-                                placeholder="layer name" 
-                                size="large"
-                                onChange={handleNewInstructions}
-                            />
+                            <h3>Layer name</h3>
 
-                            <Popover title="We add your location mark under layer name" content={<img width="400" height="165" src={layerImage} />}>
-                                <InfoCircleTwoTone />
-                            </Popover>
+                            <div class="step-map__input-layout">
+                                <Input 
+                                    name="layerName" 
+                                    placeholder="layer name" 
+                                    size="large"
+                                    onChange={handleNewInstructions}
+                                />
+
+                                <div class="step-map__data-explanation-use">
+                                    <p>We will use your column content to determine in which layer group your location mark should be</p>
+                                    <img width="400" height="165" src={layerImage} />
+                                </div>
+                            </div>
                         </label>
 
                         <label>
-                            <Input 
-                                name="locationName" 
-                                placeholder="location name" 
-                                size="large"
-                                onChange={handleNewInstructions} 
-                            />
+                            <h3>Location name</h3>
 
-                            <Popover title="We add location name" content={<img width="405" height="193" src={locationImage} />}>
-                                <InfoCircleTwoTone />
-                            </Popover>
+                            <div class="step-map__input-layout">
+                                <Input 
+                                    name="locationName" 
+                                    placeholder="location name" 
+                                    size="large"
+                                    onChange={handleNewInstructions} 
+                                />
+
+                                <div class="step-map__data-explanation-use">
+                                    <p>We will use your column content as text for the location mark name field</p>
+                                    <img width="405" height="193" src={locationImage} />
+                                </div>
+                            </div>
                         </label>
 
                         <label>
-                            <Input 
-                                name="locationDescription" 
-                                placeholder="location description" 
-                                size="large"
-                                onChange={handleNewInstructions} 
-                            />
+                            <h3>Location description</h3>
 
-                            <Popover title="We add location description" content={<img width="405" height="193" src={locationImage} />}>
-                                <InfoCircleTwoTone />
-                            </Popover>
+                            <div class="step-map__input-layout">
+                                <Input 
+                                    name="locationDescription" 
+                                    placeholder="location description" 
+                                    size="large"
+                                    onChange={handleNewInstructions} 
+                                />
+
+                                <div class="step-map__data-explanation-use">
+                                    <p>We will use your column content as text for the location mark description field</p>
+                                    <img width="405" height="193" src={locationImage} />
+                                </div>
+                            </div>
                         </label>
+
+                        <label>
+                            <h3>Color</h3>
+
+                            <div class="step-map__input-layout">
+                                <Input 
+                                    name="color" 
+                                    placeholder="location description" 
+                                    size="large"
+                                    onChange={handleNewInstructions} 
+                                />
+
+                                <div class="step-map__data-explanation-use">
+                                    <p>We will use your column to pick the color in the map</p>
+                                    <img width="200" src={colorsImage} />
+                                </div>
+                            </div>
+                        </label>
+
+                        <label>
+                            <h3>Icon</h3>
+
+                            <div class="step-map__input-layout">
+                                <Input 
+                                    name="icon" 
+                                    placeholder="location description" 
+                                    size="large"
+                                    onChange={handleNewInstructions} 
+                                />
+
+                                <div class="step-map__data-explanation-use">
+                                    <p>We will use your column to find the icon in the map</p>
+                                    <img width="250" src={iconsImage} />
+                                </div>
+                            </div>
+                        </label>
+
+                        {!!columns.length && (
+                            <p class="step-map__column-suggestions">
+                                List columns: 
+                                {columns.map((columnName) => <Tag onClick={handleTagClick}>{`{${columnName}}`}</Tag>)}
+                            </p>
+                        )}
                     </div>
 
                     <Button 
