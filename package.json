@@ -15,7 +15,7 @@
     "ui": "webpack-dev-server --mode development --open",
     "build:ui": "webpack --mode production",
     "build": "npm run build:ui && npm run build:app && npm run publish",
-    "publish": "bash ./publish.sh"
+    "publish": "sh ./publish.sh"
   },
   "pkg": {
     "assets": [
