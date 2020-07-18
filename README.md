@@ -1,5 +1,5 @@
-# CSV To Google map
-CSV to Google map is software it use CSV data to add location marks on google map.
+# CSV to Google Map
+*CSV to Google Map* is a software that it uses CSV data to add location marks on Google map.
 
 <div align="center">
     <img width="600" src="./docs/screenshot-ui-setup.png" />
@@ -7,7 +7,7 @@ CSV to Google map is software it use CSV data to add location marks on google ma
 
 ## Table of Contents
 - [Product pitch](./docs/product_pitch.md) 
-- [Technical challanges](./docs/technical_challenges.md) 
+- [Technical challenges](./docs/technical_challenges.md) 
 - [Start app locally](#Start-app-locally) 
 - [Credits](#Credits) 
 
@@ -15,12 +15,12 @@ CSV to Google map is software it use CSV data to add location marks on google ma
 
 #### Setup
 
-You need need node and npm version specified in [package.json](./package.json) or use `nvm`
+You need Node and Npm version specified in [package.json](./package.json) or use `nvm`
 ```
 nvm use
 ```
 
-Install depedencies
+Install dependencies
 ```
 npm i
 ```
